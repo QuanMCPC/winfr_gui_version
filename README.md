@@ -1,2 +1,2 @@
 # winfr_gui_version
-Note: To run this batch file, copy the code, put it in a notepad and then named it winfrgui.bat (the .bat extension is VERY important)
+To use this program, copy the text in winfrgui.bat, put it in notepad, save as: winfrgui.bat (.bat IS VERY IMPORTANT) then put the winfrgui.bat into the C:\Windows\system32 and all you have to do is enter: winfrgui in command prompt to use this
