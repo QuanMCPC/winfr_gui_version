@@ -1,12 +1,45 @@
+::[Bat To Exe Converter]
+::
+::YAwzoRdxOk+EWAnk
+::fBw5plQjdG8=
+::YAwzuBVtJxjWCl3EqQJgSA==
+::ZR4luwNxJguZRRnk
+::Yhs/ulQjdF+5
+::cxAkpRVqdFKZSDk=
+::cBs/ulQjdF+5
+::ZR41oxFsdFKZSDk=
+::eBoioBt6dFKZSDk=
+::cRo6pxp7LAbNWATEpCI=
+::egkzugNsPRvcWATEpCI=
+::dAsiuh18IRvcCxnZtBJQ
+::cRYluBh/LU+EWAnk
+::YxY4rhs+aU+JeA==
+::cxY6rQJ7JhzQF1fEqQJQ
+::ZQ05rAF9IBncCkqN+0xwdVs0
+::ZQ05rAF9IAHYFVzEqQJQ
+::eg0/rx1wNQPfEVWB+kM9LVsJDGQ=
+::fBEirQZwNQPfEVWB+kM9LVsJDGQ=
+::cRolqwZ3JBvQF1fEqQJQ
+::dhA7uBVwLU+EWDk=
+::YQ03rBFzNR3SWATElA==
+::dhAmsQZ3MwfNWATElA==
+::ZQ0/vhVqMQ3MEVWAtB9wSA==
+::Zg8zqx1/OA3MEVWAtB9wSA==
+::dhA7pRFwIByZRRnk
+::Zh4grVQjdCaDJHSdtGAxPBhcDE/CH2S3C7QS7Kjd5uaCnloUWuQtf5rSlLGWJYA=
+::YB416Ek+ZW8=
+::
+::
+::978f952a14a936cc963da21a135fa983
 @echo off
-cls
-echo =========================================
-echo Windows File Recovery [Graphic User Interface [not really]]
+echo ===========================================================
+echo Windows File Recovery [GUI plug-in]
 echo Copyright [c] Microsoft Corporation. All rights reserved
 echo Made by: Diep Anh Quan 
 echo Current version supported: 0.0.11761.0
-echo Current version: 0.1 Alpha
-echo ------------------------------------------
+echo Current version: 0.2 Alpha
+echo [NOTE: This is only a plug-in to help you use the winfr tool easier. I will discontinue this after Microsoft introduce an gui version of winfr]
+echo ------------------------------------------------------------
 echo 1. What drive do you want to recover [enter a valid drive letter, ex:C]
 set /p drive=">"
 echo 2. What is the destination folder that you want all of your recovered file placed [enter a valid drive letter and a valid path, ex:"C:\Users\%username%\Desktop", with quotes]
@@ -21,6 +54,7 @@ if %errorLevel% == 1 (
 )
 if %errorLevel% == 2 (
 	set mode=2
+	goto :extra
 )
 if %errorLevel% == 3 (
 	set mode=3
@@ -41,7 +75,28 @@ if %errorLevel% == 1 (
 	set smode=0
 )
 :confirm
-echo 6. Are you sure want to continue, please check all of you option before continue?
+echo 6. Are you sure want to continue, please check all of your option before continue?
+echo Generating report, please wait...
+echo ------------------------------------------------------------
+echo Source Drive: %drive%:
+echo Destination folder: %end_path%
+if %mode% == 1 (
+	echo Mode: Segment mode
+)
+if %mode% == 2 (
+	echo Mode: Signature mode
+)
+if %mode% == 3 (
+	echo Mode: Default mode
+)
+if %smode% == 1 (
+	echo Filter included: %filter%
+)
+if %smode% == 2 (
+	echo Extenstion groups included: %extension%
+)
+echo Report generated at: %date% at %time%
+echo ------------------------------------------------------------
 choice /c:yn
 if %errorLevel% == 1 (
 	goto start
@@ -60,16 +115,13 @@ goto confirm
 echo Please enter a valid extension groups [ex: "PDF,PNG,JPEG", with no quotes] [Quit the program to cancel]
 echo "/y:<type(s)> - Recover specific extension groups [signature mode only, comma separated]"
 set /p extension=">"
-if %smode% == 1 (
-	set smode=3
-) else (
 	set smode=2
-)
 goto confirm
 
 :start
 if %smode% == 1 (
 	if %mode% == 1 (
+	echo Executing winfr, please wait...
 	winfr %drive%: %end_path% /r %filter%
 	pause	
 	)
@@ -78,6 +130,7 @@ if %smode% == 1 (
 	pause
 	)
 	if %mode% == 3 (
+	echo Executing winfr, please wait...
 	winfr %drive%: %end_path% %filter%
 	pause		
 	)
@@ -88,6 +141,7 @@ if %smode% == 2 (
 	pause	
 	)
 	if %mode% == 2 (
+	echo Executing winfr, please wait...
 	winfr %drive%: %end_path% /x /y:%extension%
 	pause		
 	)
@@ -98,14 +152,17 @@ if %smode% == 2 (
 )
 if %smode% == 0 (
 	if %mode% == 1 (
+	echo Executing winfr, please wait...
 	winfr %drive%: %end_path% /r 
 	pause
 	)
 	if %mode% == 2 (
+	echo Executing winfr, please wait...
 	winfr %drive%: %end_path% /x
 	pause	
 	)
 	if %mode% == 3 (
+	echo Executing winfr, please wait...
 	winfr %drive%: %end_path%
 	pause	
 	)
